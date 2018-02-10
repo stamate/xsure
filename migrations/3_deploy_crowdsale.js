@@ -11,14 +11,10 @@ module.exports = function(deployer, network, accounts) {
     var refundVault = accounts[0];
     var crowdsaleRate = new web3.BigNumber(settings.crowdsaleRatio);
 
-    // var start = parseInt(settings.presaleStartTimestamp) + 60 * 20
-    // var end = parseInt(settings.presaleStartTimestamp) + 60 * 30
-
     // Deploying..
     deployer.link(SafeMath, XsureCrowdsale);
     deployer.deploy(XsureCrowdsale,
                     settings.crowdsaleCap,
-                    settings.crowdsaleGoal,
                     settings.crowdsaleStartTimestamp,
                     settings.crowdsaleEndTimestamp,
                     crowdsaleRate,

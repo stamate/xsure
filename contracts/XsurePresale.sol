@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.13;
 
 import './XsureToken.sol';
 import './Whitelist.sol';
@@ -18,11 +18,10 @@ import './zeppelin/crowdsale/CappedCrowdsale.sol';
 //  Minimum crowdsale investment will be 0.1 ether
 //  Mac cap for the crowdsale is 43,200,000 BPT
 //
-
-contract XsurePresale is CappedCrowdsale, Whitelist, Pausable {
-
+//Whitelist
+contract XsurePresale is CappedCrowdsale, Pausable {
     address public tokenAddress;
-    uint256 public minimalInvestmentInWei = 1.7 ether;       // Is to be set when setting the rate
+    uint256 public minimalInvestmentInWei = 0.5 ether;       // Is to be set when setting the rate
 
     XsureToken public bpToken;
 
@@ -36,7 +35,12 @@ contract XsurePresale is CappedCrowdsale, Whitelist, Pausable {
     //@param ` rate - initial presale rate.
     //@param ` _wallet - Multisig wallet the investments are being send to during presale
     //@param ` _tokenAddress - Token to be used, created outside the prsale contract  
-    function XsurePresale(uint256 _cap, uint256 _startTime, uint256 _endTime, uint256 _rate, address _wallet, address _tokenAddress) 
+    function XsurePresale(uint256 _cap,
+                          uint256 _startTime,
+                          uint256 _endTime,
+                          uint256 _rate,
+                          address _wallet,
+                          address _tokenAddress) 
         CappedCrowdsale(_cap) 
         Crowdsale(_startTime, _endTime, _rate, _wallet) public {
             tokenAddress = _tokenAddress;
@@ -55,9 +59,9 @@ contract XsurePresale is CappedCrowdsale, Whitelist, Pausable {
     // @return true if investors can buy at the moment
     function validPurchase() internal returns (bool) {
         bool minimalInvested = msg.value >= minimalInvestmentInWei;
-        bool whitelisted = addressIsWhitelisted(msg.sender);
+        // bool whitelisted = addressIsWhitelisted(msg.sender);
 
-        return super.validPurchase() && minimalInvested && !paused && whitelisted;
+        return super.validPurchase() && minimalInvested && !paused;// && whitelisted;
     }
 
     //@notice Function sets the token conversion rate in this contract

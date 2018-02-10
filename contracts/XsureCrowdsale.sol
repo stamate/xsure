@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.13;
 
 import './XsureToken.sol';
 import './CrowdsaleWhitelist.sol';
@@ -22,7 +22,7 @@ import './zeppelin/crowdsale/RefundableCrowdsale.sol';
 //  Mac cap for the crowdsale is 43,200,000 BPT
 // 
 //  
-contract XsureCrowdsale is CappedCrowdsale, FinalizableCrowdsale, CrowdsaleWhitelist, Pausable, RefundableCrowdsale {
+contract XsureCrowdsale is CappedCrowdsale, FinalizableCrowdsale, Pausable {
     using SafeMath for uint256;
 
     address public tokenAddress;
@@ -49,9 +49,15 @@ contract XsureCrowdsale is CappedCrowdsale, FinalizableCrowdsale, CrowdsaleWhite
     //@param ` _wallet - Multisig wallet the investments are being send to during presale
     //@param ` _tokenAddress - Token to be used, created outside the prsale contract  
     //@param ` _teamVault - Ether send to this contract will be stored  at this multisig wallet
-    function XsureCrowdsale(uint256 _cap, uint256 _goal, uint256 _startTime, uint256 _endTime, uint256 _rate, address _wallet, address _tokenAddress, address _teamVault, address _companyVault) 
+    function XsureCrowdsale(uint256 _cap,
+                            uint256 _startTime,
+                            uint256 _endTime,
+                            uint256 _rate,
+                            address _wallet,
+                            address _tokenAddress,
+                            address _teamVault,
+                            address _companyVault) 
         CappedCrowdsale(_cap)
-        RefundableCrowdsale(_goal)
         Crowdsale(_startTime, _endTime, _rate, _wallet) public {
             require(_tokenAddress != address(0));
             require(_teamVault != address(0));
@@ -81,10 +87,10 @@ contract XsureCrowdsale is CappedCrowdsale, FinalizableCrowdsale, CrowdsaleWhite
     // @return true if investors can buy at the moment
     function validPurchase() internal returns (bool) {
         bool moreThanMinimalInvestment = msg.value >= minimalInvestmentInWei;
-        bool whitelisted = addressIsWhitelisted(msg.sender);
+        //bool whitelisted = addressIsWhitelisted(msg.sender);
         bool lessThanMaxInvestment = invested[msg.sender] <= maxInvestmentInWei;
 
-        return super.validPurchase() && moreThanMinimalInvestment && lessThanMaxInvestment && !paused && whitelisted;
+        return super.validPurchase() && moreThanMinimalInvestment && lessThanMaxInvestment && !paused; //&& whitelisted;
     }
 
     //@notice Function overidden function will finanalise the Crowdsale

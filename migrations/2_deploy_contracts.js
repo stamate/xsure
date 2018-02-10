@@ -12,13 +12,11 @@ module.exports = function(deployer, network, accounts) {
     var admin = accounts[0];
     var refundVault = accounts[0];
 
-    // var start = parseInt(settings.presaleStartTimestamp)
-    // var end = parseInt(settings.presaleStartTimestamp) + 60 * 10
-
     // Deploying..
     deployer.deploy(SafeMath);
     deployer.link(SafeMath, XsurePresale);
     var presaleRate = new web3.BigNumber(settings.presaleRatio);
+    
     deployer.deploy(XsureToken, settings.maxTokenSupply).then(function() {
         return deployer.deploy(XsurePresale,
                                settings.presaleCap,

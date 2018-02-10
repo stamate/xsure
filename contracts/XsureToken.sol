@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity ^0.4.13;
 
 import './zeppelin/token/CappedToken.sol';
 import './zeppelin/token/PausableToken.sol';
@@ -23,8 +23,8 @@ import './zeppelin/token/PausableToken.sol';
 
 contract XsureToken is CappedToken, PausableToken {
 
-    string public constant name                 = "Xsure Token";
-    string public constant symbol               = "XSR";
+    string public constant name                 = "Xsure";
+    string public constant symbol               = "XSR2";
     uint public constant decimals               = 18;
 
     function XsureToken(uint256 _totalSupply) 
