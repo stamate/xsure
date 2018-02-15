@@ -1,0 +1,11 @@
+    "presaleStartTimestamp":1518291000,  //Saturday, February 10, 2018 7:30:00 PM
+    "presaleEndTimestamp":1518550200, // Tuesday, February 13, 2018 7:30:00 PM
+
+    "crowdsaleCap":20000e18,
+    "crowdsaleRatio":3000,
+    "crowdsaleStartTimestamp":1518598800, // Wednesday, February 14, 2018 9:00:00 AM
+    "crowdsaleEndTimestamp":1518789600, // Friday, February 16, 2018 2:00:00 PM
+
+
+    PS: 0x8a354e6bf4f94cbb80b45eee66ed09c9ae0c8f22
+    CS: 0x4d849ca04228bD780ECF25A0883b4B4969920D84

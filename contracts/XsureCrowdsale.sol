@@ -22,14 +22,14 @@ import './zeppelin/crowdsale/RefundableCrowdsale.sol';
 //  Mac cap for the crowdsale is 43,200,000 BPT
 // 
 //  
-contract XsureCrowdsale is CappedCrowdsale, FinalizableCrowdsale, Pausable {
+contract XsureCrowdsale is CappedCrowdsale, FinalizableCrowdsale, CrowdsaleWhitelist, Pausable {
     using SafeMath for uint256;
 
     address public tokenAddress;
     address public teamVault;
     address public companyVault;
-    uint256 public minimalInvestmentInWei = 0.1 ether;
-    uint256 public maxInvestmentInWei = 50 ether;
+    uint256 public minimalInvestmentInWei = 0.001 ether;
+    uint256 public maxInvestmentInWei = 1000 ether;
     
     mapping (address => uint256) internal invested;
 
@@ -87,10 +87,10 @@ contract XsureCrowdsale is CappedCrowdsale, FinalizableCrowdsale, Pausable {
     // @return true if investors can buy at the moment
     function validPurchase() internal returns (bool) {
         bool moreThanMinimalInvestment = msg.value >= minimalInvestmentInWei;
-        //bool whitelisted = addressIsWhitelisted(msg.sender);
+        bool whitelisted = addressIsWhitelisted(msg.sender);
         bool lessThanMaxInvestment = invested[msg.sender] <= maxInvestmentInWei;
 
-        return super.validPurchase() && moreThanMinimalInvestment && lessThanMaxInvestment && !paused; //&& whitelisted;
+        return super.validPurchase() && moreThanMinimalInvestment && lessThanMaxInvestment && !paused && whitelisted;
     }
 
     //@notice Function overidden function will finanalise the Crowdsale

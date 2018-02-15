@@ -24,7 +24,7 @@ import './zeppelin/token/PausableToken.sol';
 contract XsureToken is CappedToken, PausableToken {
 
     string public constant name                 = "Xsure";
-    string public constant symbol               = "XSR2";
+    string public constant symbol               = "XSR3";
     uint public constant decimals               = 18;
 
     function XsureToken(uint256 _totalSupply) 

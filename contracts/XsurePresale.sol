@@ -19,9 +19,9 @@ import './zeppelin/crowdsale/CappedCrowdsale.sol';
 //  Mac cap for the crowdsale is 43,200,000 BPT
 //
 //Whitelist
-contract XsurePresale is CappedCrowdsale, Pausable {
+contract XsurePresale is CappedCrowdsale, Pausable, Whitelist {
     address public tokenAddress;
-    uint256 public minimalInvestmentInWei = 0.5 ether;       // Is to be set when setting the rate
+    uint256 public minimalInvestmentInWei = 0.001 ether;       // Is to be set when setting the rate
 
     XsureToken public bpToken;
 
@@ -59,9 +59,9 @@ contract XsurePresale is CappedCrowdsale, Pausable {
     // @return true if investors can buy at the moment
     function validPurchase() internal returns (bool) {
         bool minimalInvested = msg.value >= minimalInvestmentInWei;
-        // bool whitelisted = addressIsWhitelisted(msg.sender);
+        bool whitelisted = addressIsWhitelisted(msg.sender);
 
-        return super.validPurchase() && minimalInvested && !paused;// && whitelisted;
+        return super.validPurchase() && minimalInvested && !paused && whitelisted;
     }
 
     //@notice Function sets the token conversion rate in this contract
